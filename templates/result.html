@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Results{% endblock %}
+
+{% block content %}
+<h1>Risk Analysis Result</h1>
+
+<table>
+<tr>
+    <th>Stock</th>
+    <th>Return</th>
+    <th>Volatility</th>
+    <th>Sharpe</th>
+    <th>Risk</th>
+</tr>
+
+{% for row in results %}
+<tr>
+    <td>{{ row.index }}</td>
+    <td>{{ row.Return|floatformat:2 }}</td>
+    <td>{{ row.Volatility|floatformat:2 }}</td>
+    <td>{{ row.Sharpe|floatformat:2 }}</td>
+    <td class="{% if row.Risk_Level == 'Low Risk' %}low
+               {% elif row.Risk_Level == 'Medium Risk' %}medium
+               {% else %}high{% endif %}">
+        {{ row.Risk_Level }}
+    </td>
+</tr>
+{% endfor %}
+</table>
+
+<a href="/" class="back-btn">Analyze Again</a>
+{% endblock %}

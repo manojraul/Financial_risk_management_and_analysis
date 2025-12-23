@@ -1,0 +1,6 @@
+Django
+pandas
+numpy
+scikit-learn
+matplotlib
+yfinance
