@@ -1,13 +1,28 @@
-{% extends 'base.html' %}
-{% block title %}Analyze Risk{% endblock %}
+{% extends "base.html" %}
 
 {% block content %}
 <h1>Analyze Stock Risk</h1>
-
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="stocks"
-           placeholder="AAPL, MSFT, TSLA" required>
-    <button type="submit">Analyze</button>
+
+    <label for="market">Select Market:</label>
+    <select id="market" name="market">
+        <option value="">--Select Market--</option>
+        <option value="NSE" {% if selected_market == "NSE" %}selected{% endif %}>🇮🇳 NSE</option>
+        <option value="US" {% if selected_market == "US" %}selected{% endif %}>🇺🇸 US</option>
+    </select>
+    <button type="submit" name="search_market">Search</button>
+
+    {% if show_companies %}
+    <br><br>
+    <label for="stocks">Select Companies (Hold Ctrl for multiple):</label>
+    <select id="stocks" name="stocks" multiple size="6">
+        {% for name, ticker in tickers.items %}
+        <option value="{{ ticker }}">{{ name }} ({{ ticker }})</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    <button type="submit" name="analyze">Analyze Risk</button>
+    {% endif %}
 </form>
 {% endblock %}
